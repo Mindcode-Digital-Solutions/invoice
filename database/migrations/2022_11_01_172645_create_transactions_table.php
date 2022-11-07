@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionAccountTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,21 @@ class CreateTransactionAccountTable extends Migration
      */
     public function up()
     {
-        Schema::create('accounts_transactions', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('account_id');
-            $table->unsignedBigInteger('person_id')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('person_id');
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->enum('type',['income','expense']);
+            $table->date('date');
             $table->double('amount');
-            $table->enum('type',['debit','credit']);
+            $table->string('description');
+            $table->string('ref')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
 
-            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('no action');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('no action');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('no action');
             $table->foreign('person_id')->references('id')->on('people')->onDelete('no action');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('no action');
@@ -37,6 +41,6 @@ class CreateTransactionAccountTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_account');
+        Schema::dropIfExists('transactions');
     }
 }

@@ -10,12 +10,8 @@ class Account extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function accountsTransactions(){
-        return $this->hasMany(AccountsTransaction::class,'account_id');
-    }
-   
-    public function project(){
-        return $this->belongsTo(Project::class,'project_id');
+    public function transactions(){
+        return $this->hasMany(Transaction::class,'account_id');
     }
 
 }

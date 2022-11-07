@@ -17,10 +17,7 @@ class AccountResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'project_name'=>$this->project->name ?? '',
             'status'=>$this->status,
-            'total_credits'=>$this->accountsTransactions()->credit()->sum('amount'),
-            'total_debits'=>$this->accountsTransactions()->debit()->sum('amount'),
         ];
     }
 }

@@ -15,12 +15,9 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_id')->nullable();
             $table->string('name',100);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
-
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('no action');
         });
     }
 

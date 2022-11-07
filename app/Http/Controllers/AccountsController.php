@@ -27,7 +27,6 @@ class AccountsController extends Controller
         try {
             $record = Account::create([
                 'name'=>$request['name'],
-                'project_id'=>$request['project_id'],
                 'status'=>1
             ]);
             DB::commit();
@@ -43,7 +42,6 @@ class AccountsController extends Controller
         try {
             Account::find($id)->update([
                 'name'=>$request['name'],
-                'project_id'=>$request['project_id'],
             ]);
             $record = Account::find($id);
             DB::commit();

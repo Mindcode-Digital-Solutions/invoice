@@ -9,8 +9,9 @@ class Project extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    
 
-    public function accounts(){
-        return $this->hasMany(Account::class,'project_id');
+    public function transactions(){
+        return $this->hasMany(Transaction::class,'project_id');
     }
 }

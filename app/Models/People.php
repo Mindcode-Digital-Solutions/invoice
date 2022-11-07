@@ -10,7 +10,9 @@ class People extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function accountsTransactions(){
-        return $this->hasMany(AccountsTransaction::class,'person_id');
+    public function transactions(){
+        return $this->hasMany(Transaction::class,'person_id');
     }
+
+
 }

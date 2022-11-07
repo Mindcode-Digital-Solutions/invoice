@@ -17,12 +17,14 @@ class TransactionResource extends JsonResource
         return [
             'id'=>$this->id,
             'amount'=>$this->amount,
+            'project_name'=>$this->project->name ?? '',
+            'account_name'=>$this->account->name ?? '',
+            'person_name'=>$this->person->name ?? '',
+            'category_name'=>$this->category->name ?? '',
             'ref'=>$this->ref,
             'type'=>$this->type,
             'date'=>$this->date,
             'description'=>$this->description,
-            'credit_accounts'=> AccountTransactionResource::collection($this->accountsTransactions()->credit()->get()),
-            'debit_accounts'=> AccountTransactionResource::collection($this->accountsTransactions()->debit()->get())
         ];
     }
 }

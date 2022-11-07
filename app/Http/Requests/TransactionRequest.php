@@ -35,39 +35,13 @@ class TransactionRequest extends FormRequest
             'type'=>'required|in:income,expense',
             'date'=>'required|date',
             'description'=>'required|max:255',
+            'account_id'=>'required|exists:accounts,id',
+            'person_id'=>'required|exists:people,id',
+            'category_id'=>'required|exists:categories,id',
+            'project_id'=>'nullable|exists:projects,id',
             'ref'=>'nullable|max:255',
-            'credit_accounts'=>'required|array|min:1',
-            'credit_accounts.*.account_id'=>'required|exists:accounts,id',
-            'credit_accounts.*.amount'=>'required|numeric|min:0|not_in:0',
-            'debit_accounts'=>'required|array|min:1',
-            'debit_accounts.*.account_id'=>'required|exists:accounts,id',
-            'debit_accounts.*.amount'=>'required|numeric|min:0|not_in:0',
+            'amount'=>'required|numeric|min:0|not_in:0',
+            'type'=>'required|in:income,expense',
         ];
-    }
-
-    public function withValidator($validator)
-    {
-        if (!$validator->fails()) {
-            $validator->after(function ($validator) {
-               
-                if (!$this->isCreditDebitBalance()){
-                    $validator->errors()->add('amount','Total of credit and debit accounts must be equal');
-                }
-            });
-        }
-    }
-
-    private function isCreditDebitBalance(){
-        $debit = $this->calArrayTotal($this->debit_accounts);
-        $credit = $this->calArrayTotal($this->credit_accounts);
-        return $debit == $credit;
-    }
-
-    private function calArrayTotal($array){
-        $amount = 0;
-        foreach($array as $item){
-            $amount += $item['amount'];
-        }
-        return $amount;
     }
 }
